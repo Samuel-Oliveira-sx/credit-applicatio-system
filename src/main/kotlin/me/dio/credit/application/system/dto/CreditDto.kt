@@ -1,5 +1,8 @@
 package me.dio.credit.application.system.dto
 
+import jakarta.validation.constraints.Future
+import jakarta.validation.constraints.Min
+import jakarta.validation.constraints.NotNull
 import me.dio.credit.application.system.entity.Credit
 import me.dio.credit.application.system.entity.Customer
 import java.math.BigDecimal
@@ -7,10 +10,10 @@ import java.time.LocalDate
 
 data class CreditDto(
 
-    val creditValue: BigDecimal,
-    val dayFirstOfInstallment: LocalDate,
-    val numberOfInstallment: Int,
-    val customerId: Long
+    @field:NotNull(message = "invalid input") val creditValue: BigDecimal,
+    @field:Future val dayFirstOfInstallment: LocalDate,
+    @field:Min(1, message = "Number of installments must be at least 1") val numberOfInstallment: Int,
+    @field:NotNull(message = "invalid input") val customerId: Long
 ) {
 
     fun toEntity(): Credit = Credit(
